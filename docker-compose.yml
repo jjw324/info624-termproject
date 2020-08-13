@@ -1,0 +1,23 @@
+version: '2.2'
+services:
+    elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.8.1
+        environment:
+            - discovery.type=single-node
+        ports:
+            - 9200:9200
+            - 9300:9300
+    api:
+        build: ./api
+        command: npm start
+        ports:
+            - 3001:3001
+        depends_on:
+            - elasticsearch
+    app:
+        build: ./app
+        command: npm start
+        ports:
+            - 3000:3000
+        tty: true
+        
