@@ -12,7 +12,7 @@ Summer 2020
 
 ## Running the Project
 ### Using Docker
-The easiest way to run this project would be to use Docker. From the project root directory, run: `docker-compose up --build`  Note that this requires that you have Docker installed on your machine. 
+The easiest way to run this project would be to use Docker. From the project root directory, run: `docker-compose up`  Note that this requires that you have Docker installed on your machine. 
 Once all 3 containers are operational, navigate to localhost:5000 in your web browser.
 ### Not using Docker
 If you aren't using Docker, then follow these steps.
