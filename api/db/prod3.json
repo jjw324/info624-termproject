@@ -1,15 +1,16 @@
 {
     "productInfo": {
-        "title": "Sample Product",
-        "description": "description",
-        "price": "12.99",
-        "img": "this.jpg",
-        "category": "",
-        "tags": []
+        "title": "KitchenAid Stand Mixer",
+        "description": "There is no better stand mixer than a KitchenAid! With 12 speeds, this mixer can help make anything you can think of!",
+        "shortDescription": "Large countertop stand mixer",
+        "price": 120,
+        "img": "",
+        "category": "Household and Kitchen Supplies",
+        "tags": ["kitchen", "appliance", "mixer", "powerful"]
     },
     "meta" : {
-        "createdAt": "2020-08-01T12:00:00.000Z",
-        "updatedAt": "2020-08-01T12:00:00.000Z",
-        "createdBy": "jjw324@drexel.edu"
+        "createdAt": "",
+        "updatedAt": "",
+        "createdBy": "Elaine Factor"
     }
 }

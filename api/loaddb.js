@@ -18,12 +18,14 @@ const axiosInstance = axios.create({
 });
 
 async function connectToDatabase() {
+    console.log(`Connecting to ElasticSearch on host:${es_host} and port:${es_port}`);
+
     for(let i = 0; i < 60; i++) {
         try {
             await axiosInstance.get('/');
             return;
         } catch (err) {
-            console.log(err)
+            console.log("Waiting for Database...");
             await new Promise(r => setTimeout(r, 5000))
         }
     }
@@ -35,7 +37,13 @@ async function main() {
     console.log("Files to upload: ", filesToUpload);
     console.log("Connecting to the database...\n(times out after 5 minutes)");
     await connectToDatabase();
-    console.log("Connected to database")
+    console.log("Connected to database");
+    try {
+        await axiosInstance.delete('/products');
+        console.log('Existing products removed (prevents duplicate data on each startup)');
+    } catch (err) {
+        console.log('Attempted to clear the database index and failed. If this your first time running, then do not worry. If not, you may see duplicate data.');
+    }
     let promises = [];
 
     filesToUpload.forEach(element => {
@@ -44,12 +52,15 @@ async function main() {
             const bodyContent = JSON.parse(fs.readFileSync(filePath));
             promises.push(axiosInstance.post('/products/_doc', bodyContent));
         } catch (err) {
-            console.log(err);
+            console.log("Error: ", err);
             throw new Error(err);
         }
     });
-
-    await Promise.all(promises);
+    try {
+        await Promise.all(promises);
+    } catch (err) {
+        console.dir(err, {depth: 10});
+    }
     return;
 }
 

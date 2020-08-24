@@ -1,0 +1,16 @@
+{
+    "productInfo": {
+        "title": "9\" Square PYREX Glass Baking Dish",
+        "description": "Made of old-school borosilicate glass, this dish is guaranteed to never crack under heat! No more exploding dishes!",
+        "shortDescription": "The best baking dishes in the industry",
+        "price": 24,
+        "img": "",
+        "category": "Household and Kitchen Supplies",
+        "tags": ["kitchen", "baking", "cooking", "glass", "dish", "hardware", "durable", "borosilicate"]
+    },
+    "meta" : {
+        "createdAt": "",
+        "updatedAt": "",
+        "createdBy": "Norman Ocato"
+    }
+}

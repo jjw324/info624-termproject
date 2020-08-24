@@ -2,6 +2,7 @@ const express = require('express');
 const axios = require('axios');
 require('dotenv').config();
 const app = express();
+const cors = require('cors');
 
 const port = process.env.API_PORT;
 const es_host = process.env.ES_HOST;
@@ -15,13 +16,17 @@ const axiosInstance = axios.create({
     }
 });
 
+// MIDDLEWARES
+
+app.use(cors());
+
 // FUNCTIONS
 
 // Returns document source 
 async function getByID(id) {
-    response = await axiosInstance.get(`/_doc/${id}`);
-    if (response.statusCode === 200) {
-        return response.body._source;
+    const response = await axiosInstance.get(`/_doc/${id}`);
+    if (response.status === 200) {
+        return response.data._source;
     } else {
         throw new Error('Bad response from database', response);
     }
@@ -34,27 +39,44 @@ app.get('/', (req, res) => {
 
 // Query for products that match a freetext search query
 app.get('/searchfree', async (req, res) => {
-    const queryString = req.query.search;
-    
+    let queryString = req.query.search;
+    const suggest = queryString.includes("__suggest__");
+    queryString.replace('__suggest__', '');
+    let retObj = {
+        products: []
+    };
+
     if (typeof queryString !== "string" || queryString.trim() === "") {
         res.status(400).send("Bad query");
     }
 
-    const dbResponse = await axiosInstance.get(); // TODO
-    const hits = dbResponse.body.hits.hits; // TODO: Sort hits by score?
+    const reqBody = JSON.stringify({
+        query : {
+            multi_match: {
+                query: queryString,
+                fields: ["productInfo.title", "productInfo.description", "productInfo.tags"]
+            }
+        }
+    });
+
+    const dbResponse = await axiosInstance.get('/_search', { data: reqBody });
+    const hits = [...dbResponse.data.hits.hits].sort((a , b) => a._score < b._score);
+    
+    if(suggest) hits.shift();
+    
 
     hits.forEach(element => {
-        const page = getByID(element._id);
         retObj.products.push({
-            title: page.productInfo.title,
-            shortDescription: page.productInfo.shortDescription,
-            price: page.productInfo.price,
-            img: page.productInfo.img,
-            createdBy: page.meta.createdBy,
+            title: element._source.productInfo.title,
+            shortDescription: element._source.productInfo.shortDescription,
+            price: element._source.productInfo.price,
+            img: element._source.productInfo.img,
+            createdBy: element._source.meta.createdBy,
             id: element._id
         });
     });
 
+    res.status(200).send(retObj);
 });
 
 // Query for products that match a boolean search query
@@ -63,47 +85,68 @@ app.get('/searchbool', async (req, res) => {
     let retObj = {
         products: []
     };
-    
+
     if (typeof queryString !== "string" || queryString.trim() === "") {
         res.status(400).send("Bad query");
     }
 
-    const dbResponse = await axiosInstance.get(); // TODO
-    const hits = dbResponse.body.hits.hits;
+    // Parse out boolean search query
+    const queryTokens = queryString.split(' ');
+
+    const query = JSON.stringify({
+        "query": {
+            "match_all": {}
+        }
+    });
+
+    const dbResponse = await axiosInstance.get('/_search', query);
+    const hits = dbResponse.data.hits.hits;
 
     hits.forEach(element => {
-        const page = getByID(element._id);
         retObj.products.push({
-            title: page.productInfo.title,
-            shortDescription: page.productInfo.shortDescription,
-            price: page.productInfo.price,
-            img: page.productInfo.img,
-            createdBy: page.meta.createdBy,
-            id: element._id
+            title: element._source.productInfo.title,
+            shortDescription: element._source.productInfo.shortDescription,
+            price: element._source.productInfo.price,
+            img: element._source.productInfo.img,
+            createdBy: element._source.meta.createdBy,
+            id: element._id,
+            tags: element._source.productInfo.tags
         });
     });
 
-    res.statusCode(200).send(retObj);
+    if (queryTokens.length === 1) {
+        retObj.products = retObj.products.filter(item => item.tags.includes(queryTokens[0]));
+    } else if (queryTokens.length === 2) {
+        retObj.products = retObj.products.filter(item => !item.tags.includes(queryTokens[0]));
+    } else if (queryTokens.length === 3) {
+        if (queryTokens[1] === 'AND') {
+            retObj.products = retObj.products.filter(item => item.tags.includes(queryTokens[0]) && item.tags.includes(queryTokens[2]));
+        } else if (queryTokens[1] === 'OR') {
+            retObj.products = retObj.products.filter(item => item.tags.includes(queryTokens[0]) || item.tags.includes(queryTokens[2]));
+        } else retObj.products = [];
+    }
+
+    res.status(200).send(retObj);
 
 });
 
 // Query for a specific product page
 app.get('/page', async (req, res) => {
     const productID = req.query.id;
-    
+
     if (typeof productID !== "string") {
         res.status(400).send("Bad query");
     }
 
-    const dbResponse = getByID(productID);
-    
+    const dbResponse = await getByID(productID);
+
     // Sends the exact product page
     res.status(200).send(dbResponse)
 
 });
 
 app.get('/suggest', async (req, res) => {
-    const suggestionTags = req.query.tags;
+    const suggestionTags = JSON.parse(req.query.tags);
 
     if (typeof suggestionTags !== "string") {
         res.status(400).send("Bad query");

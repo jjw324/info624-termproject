@@ -1,15 +1,16 @@
 {
     "productInfo": {
-        "title": "Sample Product",
-        "description": "description",
-        "price": "12.99",
-        "img": "this.jpg",
-        "category": "",
-        "tags": []
+        "title": "MacBook Air 2018",
+        "description": "Apple has done it again! They have created the world's lightest laptop by removing nearly all the hardware except what is necessary to keep the machine fully functioning!",
+        "shortDescription": "The lightest computer in existance!",
+        "price": 999,
+        "img": "",
+        "category": "Electronics",
+        "tags": ["light", "lightweight", "apple", "macbook", "air", "hardware", "technology"]
     },
     "meta" : {
-        "createdAt": "2020-08-01T12:00:00.000Z",
-        "updatedAt": "2020-08-01T12:00:00.000Z",
-        "createdBy": "jjw324@drexel.edu"
+        "createdAt": "",
+        "updatedAt": "",
+        "createdBy": "Garrett Howell"
     }
 }

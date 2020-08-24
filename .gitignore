@@ -2,3 +2,4 @@ api/node_modules
 api/models
 
 app/node_modules
+app/build

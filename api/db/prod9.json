@@ -1,0 +1,16 @@
+{
+    "productInfo": {
+        "title": "850w Power Supply Unit",
+        "description": "An 850w PSU will meet all your gaming needs! Intended to be used with the most heavy-duty hardware, but it can be used with any PC you want.",
+        "shortDescription": "Heavy Duty - for Gaming",
+        "price": 250,
+        "img": "",
+        "category": "Electronics",
+        "tags": ["hardware", "powerful", "computer", "electricity", "watt"]
+    },
+    "meta" : {
+        "createdAt": "",
+        "updatedAt": "",
+        "createdBy": "Rochelle Stein"
+    }
+}

@@ -7,17 +7,36 @@ services:
         ports:
             - 9200:9200
             - 9300:9300
+        networks: 
+            - backend
     api:
         build: ./api
-        command: npm start
+        command: npm run dev
         ports:
             - 3001:3001
+        environment:
+            - API_PORT=3001
+            - API_HOST=localhost
+            - ES_PORT=9200
+            - ES_HOST=elasticsearch
         depends_on:
             - elasticsearch
+        links:
+            - elasticsearch
+        networks: 
+            - frontend
+            - backend
     app:
         build: ./app
-        command: npm start
+        command: npm run serve
         ports:
-            - 3000:3000
+            - 5000:5000
         tty: true
+        networks:
+            - frontend
+networks:
+    frontend:
+        driver: bridge
+    backend:
+        driver: bridge
         

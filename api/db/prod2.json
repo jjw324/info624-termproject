@@ -1,15 +1,16 @@
 {
     "productInfo": {
-        "title": "Sample Product",
-        "description": "description",
-        "price": "12.99",
-        "img": "this.jpg",
-        "category": "",
-        "tags": []
+        "title": "Fluorescent Light Bulb, 120w",
+        "description": "A light bulb is essential for all your office needs. Rated to last over 10,000 hours, this magical light bulb never seems to burn out!",
+        "shortDescription": "A simple light bulb for desk and floor lamps",
+        "price": 8,
+        "img": "",
+        "category": "Household and Kitchen Supplies",
+        "tags": ["light", "bulb", "bright", "office", "kitchen", "long-lasting"]
     },
     "meta" : {
-        "createdAt": "2020-08-01T12:00:00.000Z",
-        "updatedAt": "2020-08-01T12:00:00.000Z",
-        "createdBy": "jjw324@drexel.edu"
+        "createdAt": "",
+        "updatedAt": "",
+        "createdBy": "Collin Demarest"
     }
 }

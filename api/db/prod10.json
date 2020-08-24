@@ -1,16 +1,16 @@
 {
     "productInfo": {
-        "title": "10' LED Light Strip",
+        "title": "20' LED Light Strip",
         "description": "This RGB light strip has over two million colors for all your decorating needs!",
-        "shortDescription": "Sticky RGB light strip for all purposes",
+        "shortDescription": "The longest sticky RGB light strip",
         "price": 20,
         "img": "",
         "category": "Electronics",
-        "tags": ["lights", "led", "sticky", "color", "fun"]
+        "tags": ["lights", "led", "sticky", "color", "long", "watt"]
     },
     "meta" : {
         "createdAt": "",
         "updatedAt": "",
-        "createdBy": "Anna Brielle"
+        "createdBy": "Tom Ulysses"
     }
 }

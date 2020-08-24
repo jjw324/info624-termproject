@@ -1,29 +1,35 @@
 # info624-termproject
-Information Retrieval Systems project
+## Information Retrieval Systems Term Project
+Jacob Williamson
 
-This repository contains 3 separate, smaller components
+Department of Information Science
 
-api - Express server backend
-app - React frontend
-db - ElasticSearch database
+Drexel University
 
-PORTS:
-app: 3000
-api: 3001
-db: 9200
+Summer 2020
 
-ENV File:
-api/.env:
-- API_HOST
-- API_PORT
-- ES_HOST
-- ES_PORT
+---
 
-React:
-docker run -it -p 3000:3000 jjw324/info624_app
+## Running the Project
+### Using Docker
+The easiest way to run this project would be to use Docker. From the project root directory, run: `docker-compose up --build`  Note that this requires that you have Docker installed on your machine. 
+Once all 3 containers are operational, navigate to localhost:5000 in your web browser.
+### Not using Docker
+If you aren't using Docker, then follow these steps.
+1. Follow [these instructions](https://www.elastic.co/guide/en/elasticsearch/reference/current/getting-started-install.html) to run ElasticSearch on localhost:9200 
+2. In ./api, run `npm install`
+3. Run `npm run dev` to start the API server on localhost:3001
+4. In ./app, run `npm install`
+5. Run `npm start` to start the React App on localhost:300
+Alternatively you could build the React app and use serve to host it on localhost:5000
 
-Express:
-docker run -p 3001:3001 jjw324/info624_api
+## Components
+- api - Node/Express server backend
+- app - React frontend
+- db - ElasticSearch database data
 
-ElasticSearch:
-docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.8.1
+### PORTS:
+- app (dev only): 3000
+- app: 5000
+- api: 3001
+- db: 9200

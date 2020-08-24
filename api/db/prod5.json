@@ -1,0 +1,16 @@
+{
+    "productInfo": {
+        "title": "Lenovo Yoga 15\" Laptop",
+        "description": "The Lenovo Yoga Laptop is a multi-purpose laptop that can function as a laptop or as a tablet. Perfect for kids and adults!",
+        "shortDescription": "A super-flexible laptop!",
+        "price": 899,
+        "img": "",
+        "category": "Electronics",
+        "tags": ["light", "flexible", "lenovo", "laptop", "yoga", "hardware", "technology"]
+    },
+    "meta" : {
+        "createdAt": "",
+        "updatedAt": "",
+        "createdBy": "Isaac Jon"
+    }
+}
