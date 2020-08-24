@@ -20,7 +20,7 @@ If you aren't using Docker, then follow these steps.
 2. In ./api, run `npm install`
 3. Run `npm run dev` to start the API server on localhost:3001
 4. In ./app, run `npm install`
-5. Run `npm start` to start the React App on localhost:300
+5. Run `npm start` to start the React App on localhost:3000
 Alternatively you could build the React app and use serve to host it on localhost:5000
 
 ## Components
